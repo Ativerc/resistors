@@ -19,19 +19,25 @@ let result = document.createElement('div');
 
 
 query.addEventListener('input', onQueryChange);
+query.addEventListener('change', onQueryChange)
 
 function onQueryChange(event) {
     location.hash = encodeURIComponent(query.value);
-    var currentdate = new Date(); 
+    var currentdate = new Date();
     var datetime = " | Last Load: " + currentdate.getDate() + "/"
                 + (currentdate.getMonth()+1)  + "/" 
                 + currentdate.getFullYear() + " @ "  
                 + currentdate.getHours() + ":"  
                 + currentdate.getMinutes() + ":" 
                 + currentdate.getSeconds();
-    let test = resistorValues.lookup[2]["color"];
-    result.textContent = event.currentTarget.value + datetime + test;
+    let colorTest = resistorValues.lookup[2]["color"];
+    let eventValue = event.currentTarget.value;
+    result.textContent = `${eventValue} ${datetime} ${colorTest} ${getInputValue(eventValue)}`;
     document.body.append(result);
+
+}
+
+function numberToColors() {
 
 }
 
@@ -47,7 +53,24 @@ Calls: sanitizeInput(rawInput)
 Returns: number
 */
 function getInputValue(rawInput) {
-    
+    lastChar = rawInput.substring( rawInput.length - 1);
+    validlastChar = ["k", "K", "M", "m"];
+    let multiplier = 1;
+    if (validlastChar.includes(lastChar)) {
+        if (( lastChar == 'k' ) || (lastChar == 'K')) {
+            multiplier = 1000;
+            let numString = rawInput.slice(0, -1);
+            return numString * multiplier;
+        }
+        if (( lastChar == 'm' ) || (lastChar == 'M')) {
+            multiplier = 1000000;
+            let numString = rawInput.slice(0, -1);
+            return numString * multiplier;
+        }
+    // TODO add support for 3k3 4k7
+    } else {
+        return +rawInput;
+    }
 }
 
 
