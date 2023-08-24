@@ -13,5 +13,5 @@ Value -> Resistor Color Code converter
   - [ ] Nearest Resistor Color Code
   - [ ] 5 Band Color Code
 - Search Bar Extras:
-- [ ] Improve Styling
-- [ ] Advanced Autocomplete for Colors via Search
+  - [ ] Improve Styling
+  - [ ] Advanced Autocomplete for Colors via Search
